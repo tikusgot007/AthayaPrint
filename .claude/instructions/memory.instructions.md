@@ -85,13 +85,14 @@
 - **Achieved Milestones:**
   - Authored the Phase 2 Implementation Plan: **17 functional tracer bullets + 5 phase gates** (VERIFY + APPROVAL per phase) across Phase 0 (Alignment) through Phase 4 (Hardening). Zero task exceeds size M.
   - Pre-Flight audit uncovered and resolved **2 internal Spec contradictions** before any code was written.
-  - Established that the project root was **not** a git repository (RISK-004). **Resolved during this session:** the repository was initialized on branch `main` with baseline commit `897b4bb` (38 files tracked). TASK-002 therefore no longer needs to perform `git init`.
+  - Established that the project root was **not** a git repository (RISK-004). **Resolved during this session:** the repository was initialized on branch `main` (baseline commit `897b4bb`, 38 files tracked) and published to `https://github.com/tikusgot007/AthayaPrint` as a **public** repository with `origin` tracking `main`. TASK-002 therefore no longer needs to perform `git init`.
 - **Dead-Ends (Do NOT Repeat):** No new dead-ends this session. See Knowledge Base rows #1–#4 (Premature Coding, Horizontal Slicing, Blind Shotgun Patching, Dogmatic Over-engineering) — all remain valid.
 - **Updated Files:**
   - `docs/plan/athayaprint-batik-nota-label-plan.md` — Created (v1.0.0, status: Planned)
   - `.claude/instructions/memory.instructions.md` — Checkpoint appended
   - `AGENTS.md` — Stale `.agents/` path references corrected to `.claude/`
   - `.gitignore` — Created; isolates the `awesome-copilot-id/` toolkit checkout (a separate git repository) plus Android/Gradle build output, signing material, IDE cruft, and secrets
+  - `.gitattributes` — Created; normalizes line endings (LF in the repository, CRLF for Windows scripts, binary assets excluded from diffing)
 - **Decisions Made:**
   - **Nota paper size = A6 (105x148mm).** Rejects the "A4" wording found in AC-003 and Spec §7. `PaperSize` enum exposes exactly `A6_105X148MM` and `ROLL_80MM`.
   - **No INV format = 4-digit `INV-YYYY-MM-NNNN`.** Rejects the 3-digit `INV-YYYY-MM-NNN` pattern found in Spec §4.
