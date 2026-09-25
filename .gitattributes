@@ -1,0 +1,43 @@
+# ============================================================
+# AthayaPrint — Line Ending & Diff Normalization
+# ============================================================
+
+# Default: store LF in the repository regardless of the checkout OS.
+* text=auto eol=lf
+
+# --- Source & config: always LF in the repository ------------
+*.kt          text eol=lf
+*.kts         text eol=lf
+*.java        text eol=lf
+*.xml         text eol=lf
+*.json        text eol=lf
+*.md          text eol=lf
+*.yml         text eol=lf
+*.yaml        text eol=lf
+*.toml        text eol=lf
+*.gradle      text eol=lf
+*.properties  text eol=lf
+*.pro         text eol=lf
+
+# --- Windows-only scripts must keep CRLF ---------------------
+*.bat         text eol=crlf
+*.cmd         text eol=crlf
+*.ps1         text eol=crlf
+
+# --- Binary assets: never touch, never diff ------------------
+*.png         binary
+*.jpg         binary
+*.jpeg        binary
+*.gif         binary
+*.webp        binary
+*.ico         binary
+*.ttf         binary
+*.otf         binary
+*.jar         binary
+*.apk         binary
+*.aab         binary
+*.keystore    binary
+*.jks         binary
+
+# --- Generated / lock artifacts: hide from diffs -------------
+*.lock        -diff
