@@ -85,16 +85,17 @@
 - **Achieved Milestones:**
   - Authored the Phase 2 Implementation Plan: **17 functional tracer bullets + 5 phase gates** (VERIFY + APPROVAL per phase) across Phase 0 (Alignment) through Phase 4 (Hardening). Zero task exceeds size M.
   - Pre-Flight audit uncovered and resolved **2 internal Spec contradictions** before any code was written.
-  - Established that the project root is **not a git repository** (RISK-004), making `git init` a prerequisite inside TASK-002 rather than a later convenience.
+  - Established that the project root was **not** a git repository (RISK-004). **Resolved during this session:** the repository was initialized on branch `main` with baseline commit `897b4bb` (38 files tracked). TASK-002 therefore no longer needs to perform `git init`.
 - **Dead-Ends (Do NOT Repeat):** No new dead-ends this session. See Knowledge Base rows #1–#4 (Premature Coding, Horizontal Slicing, Blind Shotgun Patching, Dogmatic Over-engineering) — all remain valid.
 - **Updated Files:**
   - `docs/plan/athayaprint-batik-nota-label-plan.md` — Created (v1.0.0, status: Planned)
   - `.claude/instructions/memory.instructions.md` — Checkpoint appended
   - `AGENTS.md` — Stale `.agents/` path references corrected to `.claude/`
+  - `.gitignore` — Created; isolates the `awesome-copilot-id/` toolkit checkout (a separate git repository) plus Android/Gradle build output, signing material, IDE cruft, and secrets
 - **Decisions Made:**
   - **Nota paper size = A6 (105x148mm).** Rejects the "A4" wording found in AC-003 and Spec §7. `PaperSize` enum exposes exactly `A6_105X148MM` and `ROLL_80MM`.
   - **No INV format = 4-digit `INV-YYYY-MM-NNNN`.** Rejects the 3-digit `INV-YYYY-MM-NNN` pattern found in Spec §4.
-  - **`git init` is scoped into TASK-002 (Walking Skeleton)**, because rollback strategy is fictional without a VCS baseline.
+  - **`git init` was executed immediately (2026-09-26)** rather than deferred to TASK-002, because a rollback strategy is fictional without a VCS baseline. Branch `main`, baseline commit `897b4bb`.
   - **The Plan is the source of truth for paper size and invoice format until the Spec is amended to v1.2.0.**
   - Print Engine execution order is deliberate: `PrinterDriver` port + `MockPrinterDriver` (TASK-016) land **before** both real drivers, so use-case orchestration is provable without hardware.
 - **Next Action / Pending:**

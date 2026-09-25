@@ -91,7 +91,7 @@ Every task must fit into one focused session. AI agents work most reliably on XS
 | Task | Description | Ref ID | AC Ref | Dep | Files | Completed | Date |
 | :--- | :--- | :--- | :--- | :--- | :---: | :---: | :---: |
 | TASK-001 | Author canonical `CONTEXT.md` (de-duplicated from Spec Section 2) plus `docs/adr/0001-dual-printer-abstraction.md`, `0002-offline-first-single-device.md`, `0003-type-driven-domain.md` | - | - | - | 1 (XS) | [ ] | |
-| TASK-002 | Walking Skeleton: `git init` + `.gitignore`, Gradle project, Hilt, Room v1, Compose shell, module folders (`domain/`, `usecases/`, `data/local/`, `data/printer/`, `presentation/`), one placeholder screen that launches on device | CON-004 | - | TASK-001 | 5-6 (L) | [ ] | |
+| TASK-002 | Walking Skeleton: Gradle project, Hilt, Room v1, Compose shell, module folders (`domain/`, `usecases/`, `data/local/`, `data/printer/`, `presentation/`), one placeholder screen that launches on device. (`git init` + `.gitignore` already landed 2026-09-26 — do not repeat.) | CON-004 | - | TASK-001 | 5-6 (L) | [ ] | |
 | TASK-003 | **VERIFY:** `./gradlew assembleDebug testDebugUnitTest` passes with zero failures; APK installs and launches on Android 8+ physical device | - | - | TASK-002 | - | [ ] | |
 | TASK-004 | **APPROVAL:** Stop and wait for explicit user confirmation to proceed to Phase 1 | - | - | - | - | [ ] | |
 
@@ -218,7 +218,7 @@ Every task must fit into one focused session. AI agents work most reliably on XS
 | RISK-001 | Spec v1.1.0 contains internal contradictions: AC-003 and Section 7 say "A4" while Sections 1.1 and 4.2 imply A6 but omit it from the enum; Section 4 uses a 3-digit `INV-YYYY-MM-NNN` while Section 2 and AC-001 use `INV-2026-09-001`. | Resolved by user decision (2026-09-26): **A6** and **4-digit `NNNN`** | TASK-005, TASK-018 | Spec must be amended to v1.2.0 so it stops contradicting this plan. Until amended, this plan is the source of truth for paper size and invoice format. |
 | RISK-002 | Spec Section 8 links `docs/adr/0001`–`0003`, but none exist on disk. `CONTEXT.md` also does not exist, and Spec Section 2 defines the glossary twice with conflicting `_Avoid_` lists. | Open | TASK-001 | TASK-001 authors all four documents before any code is written. |
 | RISK-003 | USB OTG host-mode behaviour varies across Android OEMs and API levels; a path proven on one device may fail on another. | Open | TASK-002, TASK-016, TASK-018, TASK-024 | Target the actual shop device as the sole acceptance device (single-HP constraint makes this tractable). Record the exact device model and API level in the verification notes. |
-| RISK-004 | Project root `D:\AthayaPrint` is **not** a git repository, so atomic commits and `git bisect` are unavailable today. | Open | TASK-002 | TASK-002 includes `git init` and a `.gitignore` covering Gradle, Android Studio, and keystore material before the first commit. |
+| RISK-004 | Project root `D:\AthayaPrint` was **not** a git repository, so atomic commits and `git bisect` were unavailable. | ✅ Resolved 2026-09-26 | TASK-002 | Repository initialized on branch `main` with baseline commit `897b4bb`. `.gitignore` isolates the `awesome-copilot-id/` toolkit checkout (a separate git repository) plus Gradle output, signing material, IDE cruft, and secrets. TASK-002 no longer performs `git init`. |
 | RISK-005 | Bluetooth thermal printing is mentioned in REQ-005 but no transport-specific acceptance criterion exists for it. | Open | TASK-017 | Scope TASK-017 to USB transport first. Bluetooth transport is a follow-on slice behind the same port, scheduled only if the shop hardware requires it. |
 | RISK-006 | `App size < 15MB` (CON-003) is aggressive for a Compose + Hilt + Room application. | Open | TASK-025 | Measure at TASK-025. If exceeded, record it as a finding with the R8/ProGuard and resource-shrinking options rather than silently accepting it. |
 
@@ -228,7 +228,7 @@ Every task must fit into one focused session. AI agents work most reliably on XS
 
 Step-by-step instructions to revert to a stable state if execution encounters unrecoverable issues:
 
-1. **Prerequisite:** `git init` is completed in TASK-002. Every tracer bullet lands as its own commit on a working branch, so any slice can be reverted independently.
+1. **Prerequisite:** ✅ Already met. The repository was initialized on 2026-09-26 (branch `main`, baseline commit `897b4bb`). Every tracer bullet lands as its own commit, so any slice can be reverted independently.
 2. **Revert a single tracer bullet:** `git revert <commit-sha>` for the offending slice. Because each slice is atomic and leaves the suite green, the revert restores a known-good build.
 3. **Revert an entire phase:** `git revert --no-commit <first-sha>^..<last-sha>` then commit as a single phase rollback.
 4. **Roll back the Room schema:** Room migrations are additive and versioned. Reverting a schema change means reverting the migration class together with its `@Database(version = N)` bump in the same commit. If a destructive migration was applied during development, uninstall and reinstall the debug build to reset the local database — acceptable only on the single development device, never on shop data.
