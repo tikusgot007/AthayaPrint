@@ -1,0 +1,54 @@
+# ============================================================
+# AthayaPrint — Repository Ignore Rules
+# ============================================================
+
+# --- Local toolkit checkout (SEPARATE git repository) --------
+# Cloned Polya-Coder toolkit; carries its own .git and remote.
+# Never stage it here: git would record a dangling gitlink
+# (mode 160000) instead of the files, breaking clones elsewhere.
+awesome-copilot-id/
+
+# --- Android / Gradle build artifacts ------------------------
+*.iml
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+local.properties
+release/
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# --- Signing material (NEVER commit) -------------------------
+*.jks
+*.keystore
+keystore.properties
+*.pepk
+
+# --- IDE / editor --------------------------------------------
+.idea/
+*.hprof
+.vscode/
+*.swp
+*~
+
+# --- OS cruft ------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs & crash dumps --------------------------------------
+*.log
+hs_err_pid*
+
+# --- Secrets / environment -----------------------------------
+.env
+*.env.local
+secrets.properties
+
+# --- Claude Code machine-local settings ----------------------
+.claude/settings.local.json
